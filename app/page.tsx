@@ -21,6 +21,11 @@ import {
   Moon,
   ExternalLink,
   User,
+  Terminal,
+  Brain,
+  Globe,
+  Database,
+  FileText,
 } from "lucide-react";
 import InfiniteTicker from "./components/InfiniteTicker";
 import ProjectCard from "./components/ProjectCard";
@@ -28,41 +33,41 @@ import GitHubGraph from "./components/GitHubGraph";
 
 /* ─── Data ────────────────────────────────────────────────────────────────── */
 const TECH_ROW1 = [
-  { name: "React", icon: "⚛️" },
-  { name: "Next.js", icon: "▲" },
-  { name: "TypeScript", icon: "🔷" },
-  { name: "Node.js", icon: "🟢" },
-  { name: "Python", icon: "🐍" },
-  { name: "FastAPI", icon: "⚡" },
-  { name: "PostgreSQL", icon: "🐘" },
-  { name: "MongoDB", icon: "🍃" },
-  { name: "Redis", icon: "🔴" },
-  { name: "Prisma", icon: "💠" },
-  { name: "Tailwind CSS", icon: "🎨" },
-  { name: "Docker", icon: "🐳" },
-  { name: "AWS S3", icon: "☁️" },
-  { name: "WebSockets", icon: "🔌" },
-  { name: "C++", icon: "⚙️" },
-  { name: "Java", icon: "☕" },
+  { name: "React" },
+  { name: "Next.js" },
+  { name: "TypeScript" },
+  { name: "Node.js" },
+  { name: "Python" },
+  { name: "FastAPI" },
+  { name: "PostgreSQL" },
+  { name: "MongoDB" },
+  { name: "Redis" },
+  { name: "Prisma" },
+  { name: "Tailwind CSS" },
+  { name: "Docker" },
+  { name: "AWS S3" },
+  { name: "WebSockets" },
+  { name: "C++" },
+  { name: "Java" },
 ];
 
 const TECH_ROW2 = [
-  { name: "PyTorch", icon: "🔥" },
-  { name: "TensorFlow", icon: "🧠" },
-  { name: "OpenCV", icon: "👁️" },
-  { name: "YOLOv8", icon: "🎯" },
-  { name: "Firebase", icon: "🔥" },
-  { name: "XGBoost", icon: "📈" },
-  { name: "GSAP", icon: "✨" },
-  { name: "Framer Motion", icon: "🎭" },
-  { name: "Redux", icon: "🔄" },
-  { name: "Express.js", icon: "🚂" },
-  { name: "Clerk", icon: "🔐" },
-  { name: "ShadCN UI", icon: "🎁" },
-  { name: "ElevenLabs", icon: "🎙️" },
-  { name: "Gemini AI", icon: "🤖" },
-  { name: "MySQL", icon: "🐬" },
-  { name: "NetworkX", icon: "🕸️" },
+  { name: "PyTorch" },
+  { name: "TensorFlow" },
+  { name: "OpenCV" },
+  { name: "YOLOv8" },
+  { name: "Firebase" },
+  { name: "XGBoost" },
+  { name: "GSAP" },
+  { name: "Framer Motion" },
+  { name: "Redux" },
+  { name: "Express.js" },
+  { name: "Clerk" },
+  { name: "ShadCN UI" },
+  { name: "ElevenLabs" },
+  { name: "Gemini AI" },
+  { name: "MySQL" },
+  { name: "NetworkX" },
 ];
 
 const PROJECTS = [
@@ -121,6 +126,29 @@ const HIGHLIGHTS = [
   { icon: Code2, label: "Ownership", value: "End-to-End", sub: "Liquid Text in 3–4 weeks" },
 ];
 
+const SKILLS_CATEGORIES = [
+  {
+    icon: Globe,
+    label: "Frontend",
+    items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "GSAP", "Redux", "ShadCN UI"],
+  },
+  {
+    icon: Terminal,
+    label: "Backend",
+    items: ["Node.js", "Express.js", "FastAPI", "Python", "WebSockets", "REST APIs"],
+  },
+  {
+    icon: Database,
+    label: "Databases & Cloud",
+    items: ["PostgreSQL", "MongoDB", "Redis", "Firebase", "AWS S3", "Prisma", "MySQL"],
+  },
+  {
+    icon: Brain,
+    label: "AI / ML",
+    items: ["PyTorch", "TensorFlow", "OpenCV", "YOLOv8", "ResNet50", "XGBoost", "Gemini", "Deepgram"],
+  },
+];
+
 const DOCK_ITEMS = [
   { icon: HomeIcon, href: "#hero", label: "Home" },
   { icon: User, href: "#about", label: "About" },
@@ -145,7 +173,7 @@ const stagger = {
 };
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.92 },
+  hidden: { opacity: 0, scale: 0.95 },
   show: {
     opacity: 1,
     scale: 1,
@@ -154,11 +182,12 @@ const scaleIn = {
 };
 
 /* ─── Helpers ─────────────────────────────────────────────────────────── */
-function TechChip({ name, icon }: { name: string; icon: string }) {
+function TechChip({ name }: { name: string }) {
   return (
     <div className="tech-chip">
-      <span className="text-base leading-none">{icon}</span>
-      <span className="text-[13px] font-medium" style={{ color: "var(--text-primary)" }}>{name}</span>
+      <span className="text-[13px] font-semibold" style={{ color: "var(--text-primary)" }}>
+        {name}
+      </span>
     </div>
   );
 }
@@ -176,61 +205,89 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* HERO SECTION                                                  */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="hero" className="max-w-5xl mx-auto px-5 pt-16 pb-8">
+      <section id="hero" className="max-w-5xl mx-auto px-5 pt-16 pb-4">
         <motion.div
           variants={stagger}
           initial="hidden"
           animate="show"
           className="grid grid-cols-1 md:grid-cols-12 gap-4"
         >
-          {/* ── Main Hero Card ─────────────────────────────────────── */}
+          {/* ── Photo Card ─────────────────────────────────────────── */}
           <motion.div
             variants={fadeUp}
             custom={0}
-            className="card md:col-span-8 p-8 relative overflow-hidden"
+            className="card md:col-span-3 relative overflow-hidden"
+            style={{ minHeight: "300px" }}
           >
-            {/* Decorative gradient blob */}
+            {/* Full-bleed photo */}
+            <img
+              src="/Professional_Photo.jpeg"
+              alt="Utkarsh Pushpankar"
+              className="absolute inset-0 w-full h-full object-cover object-top"
+            />
+            {/* Gradient overlay at bottom */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)",
+              }}
+            />
+            {/* Name label at bottom */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+              <p className="text-white text-sm font-semibold leading-tight">Utkarsh Pushpankar</p>
+              <p className="text-white/70 text-[11px] mt-0.5">Full-Stack · AI Systems</p>
+            </div>
+          </motion.div>
+
+          {/* ── Main Hero Text Card ─────────────────────────────────── */}
+          <motion.div
+            variants={fadeUp}
+            custom={0.1}
+            className="card md:col-span-5 p-8 relative overflow-hidden"
+          >
             <div
               className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-20 pointer-events-none"
               style={{ background: "linear-gradient(135deg, #667eea, #764ba2)" }}
             />
+            <div className="relative z-10 h-full flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-5">
+                  <span
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
+                    style={{ background: "var(--active-badge)", color: "var(--active-text)" }}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" /> Available for work
+                  </span>
+                </div>
 
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-5">
-                <span
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
-                  style={{ background: "var(--active-badge)", color: "var(--active-text)" }}
+                <h1
+                  className="text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1] mb-4"
+                  style={{ color: "var(--text-primary)" }}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-current" /> Available for work
-                </span>
+                  Hi, I&apos;m{" "}
+                  <span
+                    style={{
+                      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
+                  >
+                    Utkarsh
+                  </span>
+                </h1>
+
+                <p
+                  className="text-base leading-relaxed mb-6"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  Full-Stack Engineer building{" "}
+                  <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>AI-native products</strong> and{" "}
+                  <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>real-time systems</strong>{" "}
+                  that ship to production. Currently scaling a platform serving 450+ law firms.
+                </p>
               </div>
-
-              <h1
-                className="text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1] mb-4"
-                style={{ color: "var(--text-primary)" }}
-              >
-                Hi, I&apos;m{" "}
-                <span
-                  style={{
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  Utkarsh
-                </span>
-              </h1>
-
-              <p
-                className="text-lg leading-relaxed mb-6 max-w-xl"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                Full-Stack Engineer building{" "}
-                <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>AI-native products</strong> and{" "}
-                <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>real-time systems</strong> that ship
-                to production. Currently scaling a platform serving 450+ law firms.
-              </p>
 
               <div className="flex items-center gap-3 flex-wrap">
                 <a
@@ -257,10 +314,9 @@ export default function Home() {
 
           {/* ── Side Info Cards ───────────────────────────────────── */}
           <div className="md:col-span-4 flex flex-col gap-4">
-            {/* Location / Education card */}
             <motion.div
               variants={fadeUp}
-              custom={0.1}
+              custom={0.2}
               className="card p-5 flex-1 flex flex-col justify-between"
             >
               <div>
@@ -295,13 +351,11 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Socials card */}
-            <motion.div
-              variants={fadeUp}
-              custom={0.2}
-              className="card p-5"
-            >
-              <p className="text-[11px] font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--text-tertiary)" }}>
+            <motion.div variants={fadeUp} custom={0.3} className="card p-5">
+              <p
+                className="text-[11px] font-semibold uppercase tracking-widest mb-3"
+                style={{ color: "var(--text-tertiary)" }}
+              >
                 Connect
               </p>
               <div className="flex flex-col gap-2">
@@ -345,7 +399,10 @@ export default function Home() {
           className="card py-6"
         >
           <div className="flex items-center justify-between px-6 mb-4">
-            <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
+            <p
+              className="text-[11px] font-semibold uppercase tracking-widest"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               Tech Stack
             </p>
             <p className="text-[11px]" style={{ color: "var(--text-tertiary)" }}>
@@ -356,14 +413,14 @@ export default function Home() {
             <InfiniteTicker direction="x">
               <div className="flex items-center">
                 {TECH_ROW1.map((t) => (
-                  <TechChip key={t.name} {...t} />
+                  <TechChip key={t.name} name={t.name} />
                 ))}
               </div>
             </InfiniteTicker>
             <InfiniteTicker direction="x-reverse">
               <div className="flex items-center">
                 {TECH_ROW2.map((t) => (
-                  <TechChip key={t.name} {...t} />
+                  <TechChip key={t.name} name={t.name} />
                 ))}
               </div>
             </InfiniteTicker>
@@ -374,7 +431,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* HIGHLIGHTS ROW                                                */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="about" className="max-w-5xl mx-auto px-5 pb-4">
+      <section className="max-w-5xl mx-auto px-5 pb-4">
         <motion.div
           variants={stagger}
           initial="hidden"
@@ -399,7 +456,10 @@ export default function Home() {
                 <Icon size={18} style={{ color: "var(--text-primary)" }} strokeWidth={1.6} />
               </div>
               <div>
-                <p className="text-lg font-bold tracking-tight leading-tight" style={{ color: "var(--text-primary)" }}>
+                <p
+                  className="text-base font-bold tracking-tight leading-tight"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   {value}
                 </p>
                 <p className="text-[11px] mt-1" style={{ color: "var(--text-tertiary)" }}>
@@ -408,6 +468,89 @@ export default function Home() {
               </div>
             </motion.div>
           ))}
+        </motion.div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* ABOUT ME                                                      */}
+      {/* ══════════════════════════════════════════════════════════════ */}
+      <section id="about" className="max-w-5xl mx-auto px-5 pb-4">
+        <motion.div
+          variants={scaleIn}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+          className="card p-8 grid md:grid-cols-2 gap-8 items-center"
+        >
+          <div>
+            <p
+              className="text-[11px] font-semibold uppercase tracking-widest mb-3"
+              style={{ color: "var(--text-tertiary)" }}
+            >
+              About Me
+            </p>
+            <h2
+              className="text-2xl font-bold mb-4 leading-snug"
+              style={{ color: "var(--text-primary)" }}
+            >
+              I build things that{" "}
+              <span
+                style={{
+                  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                matter.
+              </span>
+            </h2>
+            <p
+              className="text-sm leading-[1.85]"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              I&apos;m a full-stack engineer with 1.5+ years shipping real production features — not
+              side projects, but live systems used daily. I specialize in AI-native architectures,
+              real-time systems, and owning features end-to-end. Currently the sole frontend dev
+              scaling Claw LegalTech, a platform serving{" "}
+              <strong style={{ color: "var(--text-primary)" }}>450+ law firms</strong>. I don&apos;t
+              just write code — I own outcomes.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { label: "Production Experience", value: "1.5+ yrs" },
+              { label: "CGPA at Bennett", value: "9.41/10" },
+              { label: "AI/ML Projects", value: "5+" },
+              { label: "Law Firms Served", value: "450+" },
+            ].map(({ label, value }) => (
+              <motion.div
+                key={label}
+                variants={fadeUp}
+                className="rounded-2xl p-4 flex flex-col gap-1"
+                style={{
+                  background: "var(--accent-muted)",
+                  border: "1px solid var(--border)",
+                }}
+              >
+                <p
+                  className="text-2xl font-bold tracking-tight"
+                  style={{
+                    background: "linear-gradient(135deg, #667eea, #764ba2)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  {value}
+                </p>
+                <p className="text-[11px] leading-snug" style={{ color: "var(--text-tertiary)" }}>
+                  {label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </section>
 
@@ -423,31 +566,34 @@ export default function Home() {
           className="card p-6 sm:p-8"
         >
           <div className="flex items-center justify-between mb-6">
-            <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
+            <p
+              className="text-[11px] font-semibold uppercase tracking-widest"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               Work Experience
             </p>
             <Briefcase size={15} style={{ color: "var(--text-tertiary)" }} />
           </div>
 
           <div className="flex gap-4">
-            {/* Timeline line */}
             <div className="flex flex-col items-center pt-1.5">
               <div className="timeline-dot active" style={{ background: "var(--accent-green)" }} />
               <div className="w-px flex-1 my-2" style={{ background: "var(--border-strong)" }} />
               <div className="timeline-dot" style={{ background: "var(--border-strong)" }} />
             </div>
 
-            {/* Content */}
-            <div className="flex flex-col gap-6 flex-1 min-w-0">
-              {/* Claw */}
+            <div className="flex flex-col gap-8 flex-1 min-w-0">
+              {/* Claw LegalTech */}
               <div>
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-2">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-3">
                   <div>
                     <h3 className="text-base font-semibold" style={{ color: "var(--text-primary)" }}>
                       Next.js + TypeScript Engineer
                     </h3>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-sm" style={{ color: "var(--text-secondary)" }}>Claw LegalTech</span>
+                      <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                        Claw LegalTech
+                      </span>
                       <span
                         className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold"
                         style={{ background: "var(--active-badge)", color: "var(--active-text)" }}
@@ -456,18 +602,22 @@ export default function Home() {
                       </span>
                     </div>
                   </div>
-                  <span className="text-xs flex-shrink-0 mt-1 sm:mt-0" style={{ color: "var(--text-tertiary)" }}>
+                  <span
+                    className="text-xs flex-shrink-0 mt-1 sm:mt-0"
+                    style={{ color: "var(--text-tertiary)" }}
+                  >
                     Aug 2025 – Present
                   </span>
                 </div>
 
                 <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-secondary)" }}>
-                  Sole frontend developer scaling a production platform serving <strong style={{ color: "var(--text-primary)" }}>450+ law firms</strong> and{" "}
-                  <strong style={{ color: "var(--text-primary)" }}>100+ paid customers</strong>. Built centralized Redux state management,
-                  scaled architecture across 15+ core features, and optimized performance with debouncing, memoization, and code splitting.
+                  Sole frontend developer scaling a production platform serving{" "}
+                  <strong style={{ color: "var(--text-primary)" }}>450+ law firms</strong> and{" "}
+                  <strong style={{ color: "var(--text-primary)" }}>100+ paid customers</strong>. Built
+                  centralized Redux state management, scaled architecture across 15+ core features, and
+                  optimized performance with debouncing, memoization, and code splitting.
                 </p>
 
-                {/* Liquid Text Feature Box */}
                 <div className="highlight-box">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-sm">🚀</span>
@@ -486,23 +636,28 @@ export default function Home() {
                     </span>
                   </div>
                   <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                    Architected and shipped a standalone PDF annotation engine in 3–4 weeks — dual-canvas sync,
-                    infinite canvas drawing, threaded annotations, stylus/touch support, bounding-box mapping, and persistent
-                    storage via Node.js + MongoDB.
+                    Architected and shipped a standalone PDF annotation engine in 3–4 weeks — dual-canvas
+                    sync, infinite canvas drawing, threaded annotations, stylus/touch support,
+                    bounding-box mapping, and persistent storage via Node.js + MongoDB.
                   </p>
                 </div>
               </div>
 
               {/* Education */}
               <div>
-                <h3 className="text-base font-semibold" style={{ color: "var(--text-primary)" }}>
-                  B.Tech Computer Science
-                </h3>
-                <div className="flex items-center justify-between mt-0.5">
-                  <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                    Bennett University · CGPA 9.41/10
-                  </span>
-                  <span className="text-xs" style={{ color: "var(--text-tertiary)" }}>
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
+                  <div>
+                    <h3 className="text-base font-semibold" style={{ color: "var(--text-primary)" }}>
+                      B.Tech Computer Science
+                    </h3>
+                    <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                      Bennett University · CGPA 9.41/10
+                    </span>
+                  </div>
+                  <span
+                    className="text-xs flex-shrink-0 mt-1 sm:mt-0"
+                    style={{ color: "var(--text-tertiary)" }}
+                  >
                     2023 – 2027
                   </span>
                 </div>
@@ -526,7 +681,10 @@ export default function Home() {
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-2.5">
               <Github size={16} style={{ color: "var(--text-secondary)" }} />
-              <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
+              <p
+                className="text-[11px] font-semibold uppercase tracking-widest"
+                style={{ color: "var(--text-tertiary)" }}
+              >
                 GitHub Activity
               </p>
             </div>
@@ -556,7 +714,10 @@ export default function Home() {
           viewport={{ once: true, margin: "-50px" }}
           className="flex items-center justify-between mb-4 px-1"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
+          <p
+            className="text-[11px] font-semibold uppercase tracking-widest"
+            style={{ color: "var(--text-tertiary)" }}
+          >
             Featured Projects
           </p>
           <p className="text-[11px]" style={{ color: "var(--text-tertiary)" }}>
@@ -580,6 +741,58 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════ */}
+      {/* SKILLS                                                        */}
+      {/* ══════════════════════════════════════════════════════════════ */}
+      <section className="max-w-5xl mx-auto px-5 pb-4">
+        <motion.div
+          variants={scaleIn}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+          className="card p-6 sm:p-8"
+        >
+          <p
+            className="text-[11px] font-semibold uppercase tracking-widest mb-6"
+            style={{ color: "var(--text-tertiary)" }}
+          >
+            Technical Skills
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {SKILLS_CATEGORIES.map(({ icon: Icon, label, items }) => (
+              <div key={label}>
+                <div className="flex items-center gap-2 mb-3">
+                  <div
+                    className="w-7 h-7 rounded-lg flex items-center justify-center"
+                    style={{ background: "var(--accent-muted)", border: "1px solid var(--border)" }}
+                  >
+                    <Icon size={14} style={{ color: "var(--text-secondary)" }} strokeWidth={1.6} />
+                  </div>
+                  <span className="text-xs font-semibold" style={{ color: "var(--text-primary)" }}>
+                    {label}
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {items.map((item) => (
+                    <span
+                      key={item}
+                      className="px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all duration-200 hover:scale-[1.04]"
+                      style={{
+                        background: "var(--accent-muted)",
+                        color: "var(--text-secondary)",
+                        border: "1px solid var(--border)",
+                      }}
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════ */}
       {/* CONTACT                                                       */}
       {/* ══════════════════════════════════════════════════════════════ */}
       <section id="contact" className="max-w-5xl mx-auto px-5 pb-8">
@@ -590,18 +803,20 @@ export default function Home() {
           viewport={{ once: true, margin: "-50px" }}
           className="card p-10 text-center flex flex-col items-center gap-5 relative overflow-hidden"
         >
-          {/* Decorative blobs */}
           <div
-            className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full blur-3xl opacity-10 pointer-events-none"
+            className="absolute -bottom-20 -left-20 w-56 h-56 rounded-full blur-3xl opacity-10 pointer-events-none"
             style={{ background: "linear-gradient(135deg, #667eea, #764ba2)" }}
           />
           <div
-            className="absolute -top-20 -right-20 w-48 h-48 rounded-full blur-3xl opacity-10 pointer-events-none"
+            className="absolute -top-20 -right-20 w-56 h-56 rounded-full blur-3xl opacity-10 pointer-events-none"
             style={{ background: "linear-gradient(135deg, #f093fb, #f5576c)" }}
           />
 
           <div className="relative z-10 flex flex-col items-center gap-5">
-            <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
+            <p
+              className="text-[11px] font-semibold uppercase tracking-widest"
+              style={{ color: "var(--text-tertiary)" }}
+            >
               Get in Touch
             </p>
             <h2
@@ -614,8 +829,8 @@ export default function Home() {
               className="text-sm leading-relaxed max-w-md"
               style={{ color: "var(--text-secondary)" }}
             >
-              Open to full-time roles, internships, and interesting engineering challenges.
-              I ship fast, own features end-to-end, and care about the product.
+              Open to full-time roles, internships, and interesting engineering challenges. I ship
+              fast, own features end-to-end, and care about the product.
             </p>
             <div className="flex items-center gap-3 flex-wrap justify-center">
               <a
@@ -624,6 +839,19 @@ export default function Home() {
                 style={{ background: "var(--text-primary)", color: "var(--bg)" }}
               >
                 <Mail size={15} /> Send Email
+              </a>
+              <a
+                href="/Utkarsh_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
+                style={{
+                  background: "linear-gradient(135deg, rgba(102,126,234,0.12), rgba(118,75,162,0.12))",
+                  border: "1px solid rgba(139,92,246,0.25)",
+                  color: isDark ? "#a78bfa" : "#7c3aed",
+                }}
+              >
+                <FileText size={15} /> View Resume
               </a>
               <a
                 href="https://linkedin.com/in/utkarshpushpankar"
@@ -645,7 +873,7 @@ export default function Home() {
 
       {/* ── Footer ──────────────────────────────────────────────────── */}
       <p className="text-center text-[11px] pb-20" style={{ color: "var(--text-tertiary)" }}>
-        Designed & built by Utkarsh Pushpankar · 2025
+        Designed & built by Utkarsh Pushpankar · 2026
       </p>
 
       {/* ══════════════════════════════════════════════════════════════ */}
@@ -658,14 +886,21 @@ export default function Home() {
           transition={{ delay: 0.8, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="floating-dock"
         >
-          {DOCK_ITEMS.map(({ icon: Icon, href, label }, i) => (
+          {DOCK_ITEMS.map(({ icon: Icon, href, label }) => (
             <a key={label} href={href} className="dock-item" title={label}>
               <Icon size={16} strokeWidth={1.6} />
             </a>
           ))}
           <div className="dock-divider" />
           {SOCIALS.map(({ icon: Icon, label, href }) => (
-            <a key={label} href={href} target={label === "Email" ? undefined : "_blank"} rel="noopener noreferrer" className="dock-item" title={label}>
+            <a
+              key={label}
+              href={href}
+              target={label === "Email" ? undefined : "_blank"}
+              rel="noopener noreferrer"
+              className="dock-item"
+              title={label}
+            >
               <Icon size={15} strokeWidth={1.6} />
             </a>
           ))}

@@ -7,13 +7,23 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
   title: "Utkarsh Pushpankar — Full-Stack Engineer",
   description:
     "Full-stack engineer specializing in AI-native products, real-time systems, and scalable backend architectures. Building production-grade software that matters.",
-  keywords: ["Full Stack Developer", "React", "Next.js", "Node.js", "AI", "Machine Learning", "Software Engineer"],
+  keywords: [
+    "Full Stack Developer",
+    "React",
+    "Next.js",
+    "Node.js",
+    "AI",
+    "Machine Learning",
+    "Software Engineer",
+    "Utkarsh Pushpankar",
+  ],
   authors: [{ name: "Utkarsh Pushpankar" }],
   openGraph: {
     title: "Utkarsh Pushpankar — Full-Stack Engineer",
