@@ -1,7 +1,5 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-
 interface InfiniteTickerProps {
     direction?: "x" | "y" | "x-reverse";
     speed?: "slow" | "normal" | "fast";

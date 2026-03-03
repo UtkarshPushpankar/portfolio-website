@@ -15,12 +15,12 @@ interface Project {
 export default function ProjectCard({ project }: { project: Project }) {
   return (
     <div
-      className="card card-interactive group flex flex-col h-full cursor-pointer"
+      className="project-card card card-interactive group flex flex-col h-full cursor-pointer"
       onClick={() => project.github && window.open(project.github, "_blank")}
     >
       {/* Top gradient banner */}
       <div
-        className="relative h-44 flex items-center justify-center overflow-hidden flex-shrink-0"
+        className="project-banner relative h-44 flex items-center justify-center overflow-hidden flex-shrink-0"
         style={{ background: project.color }}
       >
         {/* Subtle inner pattern */}
@@ -37,7 +37,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 
         {/* Project title */}
         <h3
-          className="relative z-10 text-xl sm:text-2xl font-bold tracking-tight text-white px-6 text-center"
+          className="display-font relative z-10 text-xl sm:text-2xl font-bold tracking-tight text-white px-6 text-center"
           style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
         >
           {project.title}
@@ -50,7 +50,7 @@ export default function ProjectCard({ project }: { project: Project }) {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-8 h-8 rounded-full transition-transform hover:scale-110"
+              className="project-action flex items-center justify-center w-8 h-8 rounded-full transition-transform hover:scale-110"
               style={{
                 background: "rgba(0,0,0,0.45)",
                 backdropFilter: "blur(8px)",
@@ -66,7 +66,7 @@ export default function ProjectCard({ project }: { project: Project }) {
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-8 h-8 rounded-full transition-transform hover:scale-110"
+              className="project-action flex items-center justify-center w-8 h-8 rounded-full transition-transform hover:scale-110"
               style={{
                 background: "rgba(0,0,0,0.45)",
                 backdropFilter: "blur(8px)",
@@ -81,7 +81,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col flex-1 p-5 gap-4">
+      <div className="project-content flex flex-col flex-1 p-5 gap-4">
         <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--text-secondary)" }}>
           {project.description}
         </p>
@@ -91,11 +91,9 @@ export default function ProjectCard({ project }: { project: Project }) {
           {project.tech.slice(0, 4).map((t) => (
             <span
               key={t}
-              className="px-2.5 py-1 rounded-lg text-[11px] font-medium"
+              className="project-tech px-2.5 py-1 rounded-lg text-[11px] font-medium"
               style={{
-                background: "var(--accent-muted)",
                 color: "var(--text-secondary)",
-                border: "1px solid var(--border)",
               }}
             >
               {t}

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import {
   Github,
   Linkedin,
@@ -79,7 +79,7 @@ const PROJECTS = [
     github: "https://github.com/utkarshpushpankar",
     demo: "",
     screenshots: [],
-    color: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    color: "linear-gradient(135deg, #0284c7 0%, #0f766e 100%)",
   },
   {
     title: "VocalHire",
@@ -89,7 +89,7 @@ const PROJECTS = [
     github: "https://github.com/utkarshpushpankar",
     demo: "",
     screenshots: [],
-    color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    color: "linear-gradient(135deg, #f97316 0%, #ef4444 100%)",
   },
   {
     title: "Women Safety Analytics",
@@ -99,7 +99,7 @@ const PROJECTS = [
     github: "https://github.com/utkarshpushpankar",
     demo: "",
     screenshots: [],
-    color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+    color: "linear-gradient(135deg, #0891b2 0%, #22c55e 100%)",
   },
   {
     title: "AgriConnect",
@@ -109,7 +109,7 @@ const PROJECTS = [
     github: "https://github.com/utkarshpushpankar",
     demo: "",
     screenshots: [],
-    color: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    color: "linear-gradient(135deg, #16a34a 0%, #06b6d4 100%)",
   },
 ];
 
@@ -195,17 +195,20 @@ function TechChip({ name }: { name: string }) {
 /* ─── Page Component ──────────────────────────────────────────────────── */
 export default function Home() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
   const isDark = mounted && theme === "dark";
 
   return (
-    <div className="min-h-screen w-full pb-24" style={{ background: "var(--bg)" }}>
+    <div className="page-shell min-h-screen w-full pb-24" style={{ background: "var(--bg)" }}>
 
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* HERO SECTION                                                  */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="hero" className="max-w-5xl mx-auto px-5 pt-16 pb-4">
+      <section id="hero" className="max-w-6xl mx-auto px-5 pt-20 pb-4">
         <motion.div
           variants={stagger}
           initial="hidden"
@@ -248,7 +251,7 @@ export default function Home() {
           >
             <div
               className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-20 pointer-events-none"
-              style={{ background: "linear-gradient(135deg, #667eea, #764ba2)" }}
+              style={{ background: "var(--brand-grad)" }}
             />
             <div className="relative z-10 h-full flex flex-col justify-between">
               <div>
@@ -262,18 +265,11 @@ export default function Home() {
                 </div>
 
                 <h1
-                  className="text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1] mb-4"
+                  className="display-font text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1] mb-4"
                   style={{ color: "var(--text-primary)" }}
                 >
                   Hi, I&apos;m{" "}
-                  <span
-                    style={{
-                      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                    }}
-                  >
+                  <span className="gradient-text">
                     Utkarsh
                   </span>
                 </h1>
@@ -292,19 +288,13 @@ export default function Home() {
               <div className="flex items-center gap-3 flex-wrap">
                 <a
                   href="#projects"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-                  style={{ background: "var(--text-primary)", color: "var(--bg)" }}
+                  className="btn-primary"
                 >
                   View Projects <ArrowUpRight size={14} />
                 </a>
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-                  style={{
-                    background: "var(--accent-muted)",
-                    color: "var(--text-primary)",
-                    border: "1px solid var(--border-strong)",
-                  }}
+                  className="btn-secondary"
                 >
                   Get in Touch
                 </a>
@@ -337,11 +327,7 @@ export default function Home() {
               <div className="mt-4 flex items-baseline gap-1.5">
                 <span
                   className="text-3xl font-bold tracking-tight"
-                  style={{
-                    background: "linear-gradient(135deg, #667eea, #764ba2)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
+                  style={{ background: "var(--brand-grad)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
                 >
                   1.5+
                 </span>
@@ -365,10 +351,8 @@ export default function Home() {
                     href={href}
                     target={label === "Email" ? undefined : "_blank"}
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all duration-200 group hover:scale-[1.01]"
+                    className="social-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all duration-200 group hover:scale-[1.01]"
                     style={{
-                      background: "var(--accent-muted)",
-                      border: "1px solid var(--border)",
                       color: "var(--text-secondary)",
                     }}
                   >
@@ -390,7 +374,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* TECH STACK — Infinite Ticker                                  */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="max-w-5xl mx-auto px-5 pb-4">
+      <section className="max-w-6xl mx-auto px-5 pb-4">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -431,7 +415,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* HIGHLIGHTS ROW                                                */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="max-w-5xl mx-auto px-5 pb-4">
+      <section className="max-w-6xl mx-auto px-5 pb-4">
         <motion.div
           variants={stagger}
           initial="hidden"
@@ -474,7 +458,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* ABOUT ME                                                      */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="about" className="max-w-5xl mx-auto px-5 pb-4">
+      <section id="about" className="max-w-6xl mx-auto px-5 pb-4">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -490,18 +474,11 @@ export default function Home() {
               About Me
             </p>
             <h2
-              className="text-2xl font-bold mb-4 leading-snug"
+              className="display-font text-2xl font-bold mb-4 leading-snug"
               style={{ color: "var(--text-primary)" }}
             >
               I build things that{" "}
-              <span
-                style={{
-                  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
+              <span className="gradient-text">
                 matter.
               </span>
             </h2>
@@ -528,20 +505,11 @@ export default function Home() {
               <motion.div
                 key={label}
                 variants={fadeUp}
-                className="rounded-2xl p-4 flex flex-col gap-1"
-                style={{
-                  background: "var(--accent-muted)",
-                  border: "1px solid var(--border)",
-                }}
+                className="stat-tile rounded-2xl p-4 flex flex-col gap-1"
               >
                 <p
                   className="text-2xl font-bold tracking-tight"
-                  style={{
-                    background: "linear-gradient(135deg, #667eea, #764ba2)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
+                  style={{ background: "var(--brand-grad)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
                 >
                   {value}
                 </p>
@@ -557,7 +525,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* WORK EXPERIENCE                                               */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="experience" className="max-w-5xl mx-auto px-5 pb-4">
+      <section id="experience" className="max-w-6xl mx-auto px-5 pb-4">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -627,9 +595,9 @@ export default function Home() {
                     <span
                       className="px-2 py-0.5 rounded-full text-[10px] font-medium"
                       style={{
-                        background: "linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1))",
-                        color: isDark ? "#a78bfa" : "#7c3aed",
-                        border: "1px solid rgba(139,92,246,0.2)",
+                        background: "var(--brand-grad-soft)",
+                        color: "var(--accent-blue)",
+                        border: "1px solid color-mix(in srgb, var(--accent-blue) 34%, transparent)",
                       }}
                     >
                       Full-Stack
@@ -670,7 +638,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* GITHUB ACTIVITY                                               */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="max-w-5xl mx-auto px-5 pb-4">
+      <section className="max-w-6xl mx-auto px-5 pb-4">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -705,7 +673,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* FEATURED PROJECTS                                             */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="projects" className="max-w-5xl mx-auto px-5 pb-4">
+      <section id="projects" className="max-w-6xl mx-auto px-5 pb-4">
         <motion.div
           variants={fadeUp}
           custom={0}
@@ -743,7 +711,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* SKILLS                                                        */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="max-w-5xl mx-auto px-5 pb-4">
+      <section className="max-w-6xl mx-auto px-5 pb-4">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -795,7 +763,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* CONTACT                                                       */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="contact" className="max-w-5xl mx-auto px-5 pb-8">
+      <section id="contact" className="max-w-6xl mx-auto px-5 pb-8">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -805,11 +773,11 @@ export default function Home() {
         >
           <div
             className="absolute -bottom-20 -left-20 w-56 h-56 rounded-full blur-3xl opacity-10 pointer-events-none"
-            style={{ background: "linear-gradient(135deg, #667eea, #764ba2)" }}
+            style={{ background: "var(--brand-grad)" }}
           />
           <div
             className="absolute -top-20 -right-20 w-56 h-56 rounded-full blur-3xl opacity-10 pointer-events-none"
-            style={{ background: "linear-gradient(135deg, #f093fb, #f5576c)" }}
+            style={{ background: "linear-gradient(135deg, #22d3ee, #f97316)" }}
           />
 
           <div className="relative z-10 flex flex-col items-center gap-5">
@@ -820,7 +788,7 @@ export default function Home() {
               Get in Touch
             </p>
             <h2
-              className="text-3xl sm:text-4xl font-bold tracking-tight"
+              className="display-font text-3xl sm:text-4xl font-bold tracking-tight"
               style={{ color: "var(--text-primary)" }}
             >
               Let&apos;s Build Something
@@ -835,8 +803,7 @@ export default function Home() {
             <div className="flex items-center gap-3 flex-wrap justify-center">
               <a
                 href="mailto:utkarshpushpankar@gmail.com"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                style={{ background: "var(--text-primary)", color: "var(--bg)" }}
+                className="btn-primary"
               >
                 <Mail size={15} /> Send Email
               </a>
@@ -844,11 +811,9 @@ export default function Home() {
                 href="/Utkarsh_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
+                className="btn-secondary"
                 style={{
-                  background: "linear-gradient(135deg, rgba(102,126,234,0.12), rgba(118,75,162,0.12))",
-                  border: "1px solid rgba(139,92,246,0.25)",
-                  color: isDark ? "#a78bfa" : "#7c3aed",
+                  color: "var(--accent-blue)",
                 }}
               >
                 <FileText size={15} /> View Resume
@@ -857,12 +822,7 @@ export default function Home() {
                 href="https://linkedin.com/in/utkarshpushpankar"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
-                style={{
-                  background: "var(--accent-muted)",
-                  border: "1px solid var(--border-strong)",
-                  color: "var(--text-primary)",
-                }}
+                className="btn-secondary"
               >
                 <Linkedin size={15} /> LinkedIn
               </a>
@@ -880,39 +840,41 @@ export default function Home() {
       {/* FLOATING DOCK                                                 */}
       {/* ══════════════════════════════════════════════════════════════ */}
       {mounted && (
-        <motion.div
-          initial={{ y: 60, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="floating-dock"
-        >
-          {DOCK_ITEMS.map(({ icon: Icon, href, label }) => (
-            <a key={label} href={href} className="dock-item" title={label}>
-              <Icon size={16} strokeWidth={1.6} />
-            </a>
-          ))}
-          <div className="dock-divider" />
-          {SOCIALS.map(({ icon: Icon, label, href }) => (
-            <a
-              key={label}
-              href={href}
-              target={label === "Email" ? undefined : "_blank"}
-              rel="noopener noreferrer"
-              className="dock-item"
-              title={label}
-            >
-              <Icon size={15} strokeWidth={1.6} />
-            </a>
-          ))}
-          <div className="dock-divider" />
-          <button
-            onClick={() => setTheme(isDark ? "light" : "dark")}
-            className="dock-item"
-            title="Toggle theme"
+        <div className="floating-dock-wrap">
+          <motion.div
+            initial={{ y: 60, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="floating-dock"
           >
-            {isDark ? <Sun size={15} strokeWidth={1.6} /> : <Moon size={15} strokeWidth={1.6} />}
-          </button>
-        </motion.div>
+            {DOCK_ITEMS.map(({ icon: Icon, href, label }) => (
+              <a key={label} href={href} className="dock-item" title={label}>
+                <Icon size={16} strokeWidth={1.6} />
+              </a>
+            ))}
+            <div className="dock-divider" />
+            {SOCIALS.map(({ icon: Icon, label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target={label === "Email" ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                className="dock-item"
+                title={label}
+              >
+                <Icon size={15} strokeWidth={1.6} />
+              </a>
+            ))}
+            <div className="dock-divider" />
+            <button
+              onClick={() => setTheme(isDark ? "light" : "dark")}
+              className="dock-item"
+              title="Toggle theme"
+            >
+              {isDark ? <Sun size={15} strokeWidth={1.6} /> : <Moon size={15} strokeWidth={1.6} />}
+            </button>
+          </motion.div>
+        </div>
       )}
     </div>
   );
