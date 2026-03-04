@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useTheme } from "next-themes";
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   Github,
   Linkedin,
@@ -26,6 +27,8 @@ import {
   Globe,
   Database,
   FileText,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import InfiniteTicker from "./components/InfiniteTicker";
 import ProjectCard from "./components/ProjectCard";
@@ -157,6 +160,63 @@ const DOCK_ITEMS = [
   { icon: MessageCircle, href: "#contact", label: "Contact" },
 ];
 
+const DEANS_HOVER_TEXT = "Won Dean's List award three times";
+
+const DEANS_LIST_AWARDS = [
+  {
+    title: "Dean's List - First Time",
+    term: "Academic Year 2023 - 2024",
+    src: "/PIC-01.jpeg",
+    objectPosition: "center 30%",
+    showInMain: false,
+  },
+  {
+    title: "Dean's List - Second Time",
+    term: "Academic Year 2024 - 2025",
+    src: "/PIC-02.jpeg",
+    objectPosition: "center center",
+  },
+  {
+    title: "Dean's List - Third Time",
+    term: "Academic Year 2025 - 2026",
+    src: "/PIC-03.jpeg",
+    objectPosition: "center 38%",
+  },
+];
+
+const AESTHETIC_GALLERY = [
+  { src: "/PIC-05.jpeg", objectPosition: "center center" },
+  { src: "/PIC-06.jpeg", objectPosition: "center center" },
+  { src: "/PIC-07.jpeg", objectPosition: "center center" },
+  { src: "/PIC-08.jpeg", objectPosition: "center center" },
+  { src: "/PIC-09.jpeg", objectPosition: "center center" },
+  { src: "/PIC-10.jpeg", objectPosition: "center center" },
+  { src: "/PIC-11.jpeg", objectPosition: "center center" },
+];
+
+const SKILL_BOARD_ITEMS = [
+  "Next.js",
+  "TypeScript",
+  "React",
+  "Node.js",
+  "FastAPI",
+  "Redis",
+  "PostgreSQL",
+  "MongoDB",
+  "Docker",
+  "WebSockets",
+  "PyTorch",
+  "TensorFlow",
+  "YOLOv8",
+  "Framer Motion",
+  "GSAP",
+  "AWS S3",
+  "Gemini AI",
+  "Prisma",
+  "Redux",
+  "ShadCN UI",
+];
+
 /* ─── Animation Variants ──────────────────────────────────────────────── */
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -195,12 +255,59 @@ function TechChip({ name }: { name: string }) {
 /* ─── Page Component ──────────────────────────────────────────────────── */
 export default function Home() {
   const { theme, setTheme } = useTheme();
+  const [activeSection, setActiveSection] = useState("#hero");
+  const [activeDeanIndex, setActiveDeanIndex] = useState(0);
+  const [aestheticIndex, setAestheticIndex] = useState(0);
+  const skillBoardRef = useRef<HTMLDivElement>(null);
   const mounted = useSyncExternalStore(
     () => () => {},
     () => true,
     () => false
   );
   const isDark = mounted && theme === "dark";
+
+  useEffect(() => {
+    const sectionIds = DOCK_ITEMS.map((item) => item.href.slice(1));
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((node): node is HTMLElement => Boolean(node));
+
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible?.target.id) {
+          setActiveSection(`#${visible.target.id}`);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "-40% 0px -45% 0px",
+        threshold: [0.2, 0.4, 0.6],
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setAestheticIndex((prev) => (prev + 1) % AESTHETIC_GALLERY.length);
+    }, 2000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const deansMainAwards = DEANS_LIST_AWARDS.filter((award) => award.showInMain !== false);
+  const activeDean = deansMainAwards[activeDeanIndex] ?? deansMainAwards[0];
+
+  const switchDean = (dir: 1 | -1) => {
+    setActiveDeanIndex((prev) => (prev + dir + deansMainAwards.length) % deansMainAwards.length);
+  };
 
   return (
     <div className="page-shell min-h-screen w-full pb-24" style={{ background: "var(--bg)" }}>
@@ -223,10 +330,13 @@ export default function Home() {
             style={{ minHeight: "300px" }}
           >
             {/* Full-bleed photo */}
-            <img
+            <Image
               src="/Professional_Photo.jpeg"
               alt="Utkarsh Pushpankar"
+              fill
+              sizes="(max-width: 768px) 100vw, 25vw"
               className="absolute inset-0 w-full h-full object-cover object-top"
+              priority
             />
             {/* Gradient overlay at bottom */}
             <div
@@ -671,6 +781,153 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════ */}
+      {/* PHASE 2 — PROOF OF WORK + DEAN'S LIST STRIP                  */}
+      {/* ══════════════════════════════════════════════════════════════ */}
+      <section id="proof" className="max-w-6xl mx-auto px-5 pb-4">
+        <motion.div
+          variants={scaleIn}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+          className="card p-6 sm:p-8"
+        >
+          <div className="proof-layout">
+            <div className="proof-top-row">
+              <div className="deans-main-column">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p
+                      className="text-[11px] font-semibold uppercase tracking-widest mb-1.5"
+                      style={{ color: "var(--text-tertiary)" }}
+                    >
+                      Dean&apos;s List
+                    </p>
+                    <h2 className="display-font text-2xl sm:text-3xl font-bold" style={{ color: "var(--text-primary)" }}>
+                      Recognition earned consistently
+                    </h2>
+                  </div>
+                  <span className="awards-badge">Won 3 Times</span>
+                </div>
+
+                <article className="deans-hero group">
+                  <Image
+                    src={activeDean.src}
+                    alt={activeDean.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 62vw"
+                    className="proof-media"
+                    style={{ objectPosition: activeDean.objectPosition }}
+                  />
+                  <div className="proof-overlay-strong">
+                    <p className="deans-hover-text">{DEANS_HOVER_TEXT}</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="deans-nav-btn left"
+                    aria-label="Previous Dean's List photo"
+                    onClick={() => switchDean(-1)}
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    type="button"
+                    className="deans-nav-btn right"
+                    aria-label="Next Dean's List photo"
+                    onClick={() => switchDean(1)}
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </article>
+              </div>
+
+              <div className="aesthetic-panel">
+                <article className="aesthetic-main">
+                  {AESTHETIC_GALLERY.map((item, idx) => (
+                    <Image
+                      key={`${item.src}-${idx}`}
+                      src={item.src}
+                      alt={`Coding and computer science aesthetic shot ${idx + 1}`}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 35vw"
+                      className={`aesthetic-slide ${idx === aestheticIndex ? "active" : ""}`}
+                      style={{ objectPosition: item.objectPosition }}
+                    />
+                  ))}
+                </article>
+
+                <div className="aesthetic-dots">
+                  {AESTHETIC_GALLERY.map((_, idx) => (
+                    <button
+                      key={`dot-${idx}`}
+                      type="button"
+                      aria-label={`Go to aesthetic image ${idx + 1}`}
+                      className={`aesthetic-dot ${idx === aestheticIndex ? "active" : ""}`}
+                      onClick={() => setAestheticIndex(idx)}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="deans-timeline-wrap">
+              <div className="deans-timeline">
+                {DEANS_LIST_AWARDS.map((award, idx) => {
+                  const isMainSelectable = award.showInMain !== false;
+                  const mappedMainIndex = deansMainAwards.findIndex((item) => item.src === award.src);
+                  const isActive =
+                    isMainSelectable && deansMainAwards[activeDeanIndex]?.src === award.src;
+
+                  return (
+                    <article
+                      key={award.title}
+                      className={`deans-step-card ${isActive ? "active" : ""} ${!isMainSelectable ? "muted" : ""}`}
+                      onMouseEnter={() => {
+                        if (isMainSelectable && mappedMainIndex !== -1) setActiveDeanIndex(mappedMainIndex);
+                      }}
+                      onFocus={() => {
+                        if (isMainSelectable && mappedMainIndex !== -1) setActiveDeanIndex(mappedMainIndex);
+                      }}
+                      onClick={() => {
+                        if (isMainSelectable && mappedMainIndex !== -1) setActiveDeanIndex(mappedMainIndex);
+                      }}
+                      tabIndex={isMainSelectable ? 0 : -1}
+                      role={isMainSelectable ? "button" : undefined}
+                      aria-label={
+                        isMainSelectable
+                          ? `Show ${award.title}`
+                          : `${award.title} preview only`
+                      }
+                    >
+                    <span className="deans-step-index">{`0${idx + 1}`}</span>
+                    <div className="award-image-wrap">
+                      <Image
+                        src={award.src}
+                        alt={award.title}
+                        fill
+                        sizes="160px"
+                        className="award-image"
+                        style={{ objectPosition: award.objectPosition }}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                        {award.title}
+                      </p>
+                      <p className="text-xs" style={{ color: "var(--text-tertiary)" }}>
+                        {award.term}
+                      </p>
+                    </div>
+                    </article>
+                  );
+                })}
+                <div className="deans-timeline-line" />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════ */}
       {/* FEATURED PROJECTS                                             */}
       {/* ══════════════════════════════════════════════════════════════ */}
       <section id="projects" className="max-w-6xl mx-auto px-5 pb-4">
@@ -725,6 +982,32 @@ export default function Home() {
           >
             Technical Skills
           </p>
+          <div className="skills-board-shell mb-6">
+            <div className="skills-board-head">
+              <p className="display-font text-lg sm:text-xl font-semibold" style={{ color: "var(--text-primary)" }}>
+                Skill Board
+              </p>
+              <p className="text-xs" style={{ color: "var(--text-tertiary)" }}>
+                Drag chips around
+              </p>
+            </div>
+            <div ref={skillBoardRef} className="skills-board">
+              {SKILL_BOARD_ITEMS.map((item) => (
+                <motion.button
+                  key={item}
+                  type="button"
+                  drag
+                  dragConstraints={skillBoardRef}
+                  dragElastic={0.12}
+                  whileHover={{ y: -4, scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="skill-node"
+                >
+                  {item}
+                </motion.button>
+              ))}
+            </div>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {SKILLS_CATEGORIES.map(({ icon: Icon, label, items }) => (
               <div key={label}>
@@ -848,7 +1131,13 @@ export default function Home() {
             className="floating-dock"
           >
             {DOCK_ITEMS.map(({ icon: Icon, href, label }) => (
-              <a key={label} href={href} className="dock-item" title={label}>
+              <a
+                key={label}
+                href={href}
+                className={`dock-item ${activeSection === href ? "active" : ""}`}
+                title={label}
+                aria-current={activeSection === href ? "page" : undefined}
+              >
                 <Icon size={16} strokeWidth={1.6} />
               </a>
             ))}
@@ -879,3 +1168,5 @@ export default function Home() {
     </div>
   );
 }
+
+
