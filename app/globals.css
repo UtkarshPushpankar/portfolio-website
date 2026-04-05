@@ -134,13 +134,46 @@ html.has-custom-cursor *::after {
   opacity: 1;
 }
 
+.custom-cursor img,
 .custom-cursor svg {
   display: block;
   filter: drop-shadow(0 8px 20px rgba(15, 23, 42, 0.14));
 }
 
+.custom-cursor.is-arrow img,
+.custom-cursor.is-arrow svg {
+  transform-origin: 18% 12%;
+  animation: cursor-arrow-drift 1.8s ease-in-out infinite;
+}
+
+.custom-cursor.is-hand img,
 .custom-cursor.is-hand svg {
+  transform-origin: 42% 16%;
+  animation: cursor-hand-wobble 0.95s ease-in-out infinite;
   filter: drop-shadow(0 10px 22px rgba(15, 23, 42, 0.18));
+}
+
+@keyframes cursor-arrow-drift {
+  0%,
+  100% {
+    transform: rotate(-2deg) translate(0, 0);
+  }
+  50% {
+    transform: rotate(1.4deg) translate(0.4px, -0.6px);
+  }
+}
+
+@keyframes cursor-hand-wobble {
+  0%,
+  100% {
+    transform: rotate(-4deg) translate(0, 0);
+  }
+  35% {
+    transform: rotate(1.8deg) translate(0.6px, -0.4px);
+  }
+  65% {
+    transform: rotate(-1.2deg) translate(-0.4px, 0.5px);
+  }
 }
 
 @keyframes marquee-x {
