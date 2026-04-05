@@ -109,6 +109,40 @@ body::after {
   -webkit-mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
 }
 
+html.has-custom-cursor,
+html.has-custom-cursor body,
+html.has-custom-cursor *,
+html.has-custom-cursor *::before,
+html.has-custom-cursor *::after {
+  cursor: none !important;
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-100px, -100px, 0);
+  transition: opacity 0.18s ease;
+  will-change: transform;
+  mix-blend-mode: normal;
+}
+
+.custom-cursor.is-visible {
+  opacity: 1;
+}
+
+.custom-cursor svg {
+  display: block;
+  filter: drop-shadow(0 8px 20px rgba(15, 23, 42, 0.14));
+}
+
+.custom-cursor.is-hand svg {
+  filter: drop-shadow(0 10px 22px rgba(15, 23, 42, 0.18));
+}
+
 @keyframes marquee-x {
   from {
     transform: translateX(0);

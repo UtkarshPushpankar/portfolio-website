@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import CustomCursor from "./components/CustomCursor";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -49,6 +50,7 @@ export default function RootLayout({
       <body className={`${manrope.variable} ${spaceGrotesk.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           {children}
+          <CustomCursor />
         </ThemeProvider>
       </body>
     </html>
