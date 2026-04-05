@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -10,10 +10,6 @@ import {
   Mail,
   ArrowUpRight,
   MapPin,
-  Code2,
-  Cpu,
-  Layers,
-  Zap,
   Home as HomeIcon,
   Briefcase,
   FolderGit2,
@@ -34,7 +30,7 @@ import InfiniteTicker from "./components/InfiniteTicker";
 import ProjectCard from "./components/ProjectCard";
 import GitHubGraph from "./components/GitHubGraph";
 
-/* ─── Data ────────────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const TECH_ROW1 = [
   { name: "React" },
   { name: "Next.js" },
@@ -87,7 +83,7 @@ const PROJECTS = [
   {
     title: "VocalHire",
     description:
-      "Real-time AI voice interview platform — Deepgram STT, ElevenLabs TTS, Gemini scoring across 5 categories with detailed analysis.",
+      "Real-time AI voice interview platform â€” Deepgram STT, ElevenLabs TTS, Gemini scoring across 5 categories with detailed analysis.",
     tech: ["Next.js", "TypeScript", "Firebase", "Vapi.ai", "Deepgram", "ElevenLabs"],
     github: "https://github.com/utkarshpushpankar",
     demo: "",
@@ -97,7 +93,7 @@ const PROJECTS = [
   {
     title: "Women Safety Analytics",
     description:
-      "Real-time CV system — fine-tuned YOLOv8 for person detection + ResNet50 for gender classification at 81% accuracy on live video.",
+      "Real-time CV system â€” fine-tuned YOLOv8 for person detection + ResNet50 for gender classification at 81% accuracy on live video.",
     tech: ["Python", "PyTorch", "YOLOv8", "ResNet50", "OpenCV"],
     github: "https://github.com/utkarshpushpankar",
     demo: "",
@@ -107,7 +103,7 @@ const PROJECTS = [
   {
     title: "AgriConnect",
     description:
-      "AI crop monitoring — 92.5% classification accuracy, pest detection, NDVI indices, and geospatial heatmaps via React Leaflet.",
+      "AI crop monitoring â€” 92.5% classification accuracy, pest detection, NDVI indices, and geospatial heatmaps via React Leaflet.",
     tech: ["React", "Node.js", "Flask", "TensorFlow", "OpenCV"],
     github: "https://github.com/utkarshpushpankar",
     demo: "",
@@ -122,11 +118,12 @@ const SOCIALS = [
   { icon: Mail, label: "Email", href: "mailto:utkarshpushpankar@gmail.com" },
 ];
 
-const HIGHLIGHTS = [
-  { icon: Layers, label: "Production Scale", value: "450+ Law Firms", sub: "Claw LegalTech platform" },
-  { icon: Cpu, label: "AI/ML Systems", value: "5+ AI Projects", sub: "YOLOv8 to LLM pipelines" },
-  { icon: Zap, label: "Real-time", value: "WebSockets & Voice", sub: "Dual-canvas, live voice AI" },
-  { icon: Code2, label: "Ownership", value: "End-to-End", sub: "Liquid Text in 3–4 weeks" },
+const HERO_PILLS = ["AI-native products", "real-time systems", "full-stack ownership"];
+
+const HERO_STATS = [
+  { value: "450+", label: "law firms on the platform I currently help scale" },
+  { value: "9.41", label: "CGPA while pursuing B.Tech Computer Science" },
+  { value: "3x", label: "Dean's List recognition across consecutive years" },
 ];
 
 const SKILLS_CATEGORIES = [
@@ -217,7 +214,7 @@ const SKILL_BOARD_ITEMS = [
   "ShadCN UI",
 ];
 
-/* ─── Animation Variants ──────────────────────────────────────────────── */
+/* â”€â”€â”€ Animation Variants â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   show: (delay: number = 0) => ({
@@ -241,7 +238,7 @@ const scaleIn = {
   },
 };
 
-/* ─── Helpers ─────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function TechChip({ name }: { name: string }) {
   return (
     <div className="tech-chip">
@@ -252,7 +249,7 @@ function TechChip({ name }: { name: string }) {
   );
 }
 
-/* ─── Page Component ──────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export default function Home() {
   const { theme, setTheme } = useTheme();
   const [activeSection, setActiveSection] = useState("#hero");
@@ -312,179 +309,138 @@ export default function Home() {
   return (
     <div className="page-shell min-h-screen w-full pb-24" style={{ background: "var(--bg)" }}>
 
-      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       {/* HERO SECTION                                                  */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="hero" className="max-w-6xl mx-auto px-5 pt-20 pb-4">
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 md:grid-cols-12 gap-4"
-        >
-          {/* ── Photo Card ─────────────────────────────────────────── */}
-          <motion.div
-            variants={fadeUp}
-            custom={0}
-            className="card md:col-span-3 relative overflow-hidden"
-            style={{ minHeight: "300px" }}
-          >
-            {/* Full-bleed photo */}
-            <Image
-              src="/Professional_Photo.jpeg"
-              alt="Utkarsh Pushpankar"
-              fill
-              sizes="(max-width: 768px) 100vw, 25vw"
-              className="absolute inset-0 w-full h-full object-cover object-top"
-              priority
-            />
-            {/* Gradient overlay at bottom */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)",
-              }}
-            />
-            {/* Name label at bottom */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
-              <p className="text-white text-sm font-semibold leading-tight">Utkarsh Pushpankar</p>
-              <p className="text-white/70 text-[11px] mt-0.5">Full-Stack · AI Systems</p>
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      <section id="hero" className="max-w-6xl mx-auto px-5 pt-16 sm:pt-20 pb-6">
+        <motion.div variants={stagger} initial="hidden" animate="show" className="hero-split">
+          <motion.div variants={fadeUp} custom={0} className="hero-portrait-panel">
+            <div className="hero-portrait-frame">
+              <Image
+                src="/Professional_Photo.jpeg"
+                alt="Utkarsh Pushpankar"
+                fill
+                sizes="(max-width: 1024px) 100vw, 42vw"
+                className="hero-portrait-image"
+                priority
+              />
+              <div className="hero-portrait-overlay" />
+              <div className="hero-portrait-topline">
+                <span className="hero-portrait-chip">Full-Stack</span>
+                <span className="hero-portrait-chip">AI Systems</span>
+              </div>
+              <div className="hero-portrait-caption">
+                <p className="text-sm font-semibold tracking-[0.16em] uppercase text-white/72">Utkarsh Pushpankar</p>
+                <p className="display-font text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                  Building with speed, taste, and ownership.
+                </p>
+              </div>
             </div>
           </motion.div>
 
-          {/* ── Main Hero Text Card ─────────────────────────────────── */}
-          <motion.div
-            variants={fadeUp}
-            custom={0.1}
-            className="card md:col-span-5 p-8 relative overflow-hidden"
-          >
-            <div
-              className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-20 pointer-events-none"
-              style={{ background: "var(--brand-grad)" }}
-            />
-            <div className="relative z-10 h-full flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-2 mb-5">
-                  <span
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
-                    style={{ background: "var(--active-badge)", color: "var(--active-text)" }}
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" /> Available for work
-                  </span>
-                </div>
+          <motion.div variants={fadeUp} custom={0.08} className="hero-details-panel">
+            <div className="hero-meta-row">
+              <span
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
+                style={{ background: "var(--active-badge)", color: "var(--active-text)" }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" /> Available for work
+              </span>
+              <span className="hero-location">
+                <MapPin size={13} />
+                India · Open to Remote
+              </span>
+            </div>
 
-                <h1
-                  className="display-font text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1] mb-4"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  Hi, I&apos;m{" "}
-                  <span className="gradient-text">
-                    Utkarsh
-                  </span>
-                </h1>
+            <p className="hero-kicker">Full-stack developer · web · AI · real-time</p>
 
-                <p
-                  className="text-base leading-relaxed mb-6"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  Full-Stack Engineer building{" "}
-                  <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>AI-native products</strong> and{" "}
-                  <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>real-time systems</strong>{" "}
-                  that ship to production. Currently scaling a platform serving 450+ law firms.
-                </p>
+            <h1 className="hero-title display-font">
+              Utkarsh
+              <span className="gradient-text">Pushpankar</span>
+            </h1>
+
+            <div className="hero-copy">
+              <p>
+                Shipping <span className="hero-inline-highlight">production-grade products</span> across
+                frontend, backend, and AI workflows. I currently help scale a platform serving{" "}
+                <strong style={{ color: "var(--text-primary)", fontWeight: 700 }}>450+ law firms</strong>,
+                while also building real-time systems that feel fast, polished, and reliable.
+              </p>
+            </div>
+
+            <div className="hero-support-top">
+              <div className="hero-pill-row">
+                {HERO_PILLS.map((pill) => (
+                  <span key={pill} className="hero-pill">
+                    {pill}
+                  </span>
+                ))}
               </div>
 
-              <div className="flex items-center gap-3 flex-wrap">
-                <a
-                  href="#projects"
-                  className="btn-primary"
-                >
+              <div className="hero-actions">
+                <a href="#projects" className="btn-primary">
                   View Projects <ArrowUpRight size={14} />
                 </a>
-                <a
-                  href="#contact"
-                  className="btn-secondary"
-                >
-                  Get in Touch
+                <a href="#contact" className="btn-secondary">
+                  Let&apos;s Talk
+                </a>
+                <a href="/Utkarsh_Resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-secondary">
+                  <FileText size={14} /> Resume
                 </a>
               </div>
-            </div>
-          </motion.div>
 
-          {/* ── Side Info Cards ───────────────────────────────────── */}
-          <div className="md:col-span-4 flex flex-col gap-4">
-            <motion.div
-              variants={fadeUp}
-              custom={0.2}
-              className="card p-5 flex-1 flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center gap-2 mb-3" style={{ color: "var(--text-tertiary)" }}>
-                  <MapPin size={13} />
-                  <span className="text-xs font-medium">India · Open to Remote</span>
-                </div>
-                <p className="text-sm font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
-                  Bennett University
-                </p>
-                <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
-                  B.Tech CS · CGPA 9.41/10
-                </p>
-                <p className="text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  Class of 2027
-                </p>
-              </div>
-              <div className="mt-4 flex items-baseline gap-1.5">
-                <span
-                  className="text-3xl font-bold tracking-tight"
-                  style={{ background: "var(--brand-grad)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-                >
-                  1.5+
-                </span>
-                <span className="text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  years shipping production code
-                </span>
-              </div>
-            </motion.div>
-
-            <motion.div variants={fadeUp} custom={0.3} className="card p-5">
-              <p
-                className="text-[11px] font-semibold uppercase tracking-widest mb-3"
-                style={{ color: "var(--text-tertiary)" }}
-              >
-                Connect
-              </p>
-              <div className="flex flex-col gap-2">
+              <div className="hero-social-row">
                 {SOCIALS.map(({ icon: Icon, label, href }) => (
                   <a
                     key={label}
                     href={href}
                     target={label === "Email" ? undefined : "_blank"}
                     rel="noopener noreferrer"
-                    className="social-link flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all duration-200 group hover:scale-[1.01]"
-                    style={{
-                      color: "var(--text-secondary)",
-                    }}
+                    className="hero-social-link"
                   >
-                    <Icon size={15} strokeWidth={1.8} />
-                    <span className="text-xs font-medium flex-1">{label}</span>
-                    <ArrowUpRight
-                      size={12}
-                      className="opacity-0 group-hover:opacity-100 transition-all duration-200 -translate-x-1 group-hover:translate-x-0"
-                      style={{ color: "var(--text-tertiary)" }}
-                    />
+                    <Icon size={15} strokeWidth={1.7} />
+                    <span>{label}</span>
                   </a>
                 ))}
               </div>
-            </motion.div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      <section className="max-w-5xl mx-auto px-5 pb-4">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+          className="hero-support-shell"
+        >
+          <div className="hero-proof-grid">
+            <div className="card hero-stats-card">
+              {HERO_STATS.map(({ value, label }) => (
+                <div key={label} className="hero-stat-item">
+                  <p className="hero-stat-value">{value}</p>
+                  <p className="hero-stat-label">{label}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="card hero-side-note">
+              <p className="hero-side-note-label">Currently</p>
+              <p className="hero-side-note-title">Next.js + TypeScript Engineer at Claw LegalTech</p>
+              <p className="hero-side-note-copy">
+                Sole frontend developer shipping high-impact product work while studying Computer Science at Bennett University.
+              </p>
+            </div>
           </div>
         </motion.div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════ */}
-      {/* TECH STACK — Infinite Ticker                                  */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="max-w-6xl mx-auto px-5 pb-4">
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      {/* TECH STACK â€” Infinite Ticker                                  */}
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      <section className="max-w-5xl mx-auto px-5 pb-4">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -522,53 +478,10 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════ */}
-      {/* HIGHLIGHTS ROW                                                */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="max-w-6xl mx-auto px-5 pb-4">
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4"
-        >
-          {HIGHLIGHTS.map(({ icon: Icon, label, value, sub }, i) => (
-            <motion.div
-              key={label}
-              variants={fadeUp}
-              custom={i * 0.05}
-              className="card card-interactive p-5 flex flex-col gap-3 cursor-default"
-            >
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{
-                  background: "var(--accent-muted)",
-                  border: "1px solid var(--border)",
-                }}
-              >
-                <Icon size={18} style={{ color: "var(--text-primary)" }} strokeWidth={1.6} />
-              </div>
-              <div>
-                <p
-                  className="text-base font-bold tracking-tight leading-tight"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  {value}
-                </p>
-                <p className="text-[11px] mt-1" style={{ color: "var(--text-tertiary)" }}>
-                  {sub}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       {/* ABOUT ME                                                      */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="about" className="max-w-6xl mx-auto px-5 pb-4">
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      <section id="about" className="max-w-5xl mx-auto px-5 pb-4">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -596,12 +509,12 @@ export default function Home() {
               className="text-sm leading-[1.85]"
               style={{ color: "var(--text-secondary)" }}
             >
-              I&apos;m a full-stack engineer with 1.5+ years shipping real production features — not
+              I&apos;m a full-stack engineer with 1.5+ years shipping real production features â€” not
               side projects, but live systems used daily. I specialize in AI-native architectures,
               real-time systems, and owning features end-to-end. Currently the sole frontend dev
               scaling Claw LegalTech, a platform serving{" "}
               <strong style={{ color: "var(--text-primary)" }}>450+ law firms</strong>. I don&apos;t
-              just write code — I own outcomes.
+              just write code â€” I own outcomes.
             </p>
           </div>
 
@@ -632,10 +545,10 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       {/* WORK EXPERIENCE                                               */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="experience" className="max-w-6xl mx-auto px-5 pb-4">
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      <section id="experience" className="max-w-5xl mx-auto px-5 pb-4">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -656,6 +569,8 @@ export default function Home() {
           <div className="flex gap-4">
             <div className="flex flex-col items-center pt-1.5">
               <div className="timeline-dot active" style={{ background: "var(--accent-green)" }} />
+              <div className="w-px flex-1 my-2" style={{ background: "var(--border-strong)" }} />
+              <div className="timeline-dot" style={{ background: "var(--border-strong)" }} />
               <div className="w-px flex-1 my-2" style={{ background: "var(--border-strong)" }} />
               <div className="timeline-dot" style={{ background: "var(--border-strong)" }} />
             </div>
@@ -684,7 +599,7 @@ export default function Home() {
                     className="text-xs flex-shrink-0 mt-1 sm:mt-0"
                     style={{ color: "var(--text-tertiary)" }}
                   >
-                    Aug 2025 – Present
+                    Aug 2025 â€“ Present
                   </span>
                 </div>
 
@@ -698,7 +613,7 @@ export default function Home() {
 
                 <div className="highlight-box">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-sm">🚀</span>
+                    <span className="text-sm">ðŸš€</span>
                     <h4 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
                       Flagship: Liquid Text
                     </h4>
@@ -714,11 +629,52 @@ export default function Home() {
                     </span>
                   </div>
                   <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                    Architected and shipped a standalone PDF annotation engine in 3–4 weeks — dual-canvas
+                    Architected and shipped a standalone PDF annotation engine in 3â€“4 weeks â€” dual-canvas
                     sync, infinite canvas drawing, threaded annotations, stylus/touch support,
                     bounding-box mapping, and persistent storage via Node.js + MongoDB.
                   </p>
                 </div>
+              </div>
+
+              {/* Revive */}
+              <div>
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-3">
+                  <div>
+                    <h3 className="text-base font-semibold" style={{ color: "var(--text-primary)" }}>
+                      Backend Developer
+                    </h3>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                        Revive
+                      </span>
+                      <span
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold"
+                        style={{
+                          background: "var(--accent-muted)",
+                          color: "var(--text-secondary)",
+                          border: "1px solid var(--border)",
+                        }}
+                      >
+                        Freelance
+                      </span>
+                    </div>
+                  </div>
+                  <span
+                    className="text-xs flex-shrink-0 mt-1 sm:mt-0"
+                    style={{ color: "var(--text-tertiary)" }}
+                  >
+                    Previously
+                  </span>
+                </div>
+
+                <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-secondary)" }}>
+                  Backend developer at Revive, a preventive and predictive health subscription platform.
+                  Architected a production-ready backend, integrated{" "}
+                  <strong style={{ color: "var(--text-primary)" }}>Dodo Payments</strong> for payment
+                  workflows, implemented{" "}
+                  <strong style={{ color: "var(--text-primary)" }}>Firebase OTP authentication</strong>,
+                  and built a <strong style={{ color: "var(--text-primary)" }}>LangChain chatbot pipeline</strong>.
+                </p>
               </div>
 
               {/* Education */}
@@ -729,14 +685,14 @@ export default function Home() {
                       B.Tech Computer Science
                     </h3>
                     <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                      Bennett University · CGPA 9.41/10
+                      Bennett University Â· CGPA 9.41/10
                     </span>
                   </div>
                   <span
                     className="text-xs flex-shrink-0 mt-1 sm:mt-0"
                     style={{ color: "var(--text-tertiary)" }}
                   >
-                    2023 – 2027
+                    2023 â€“ 2027
                   </span>
                 </div>
               </div>
@@ -745,10 +701,10 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       {/* GITHUB ACTIVITY                                               */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="max-w-6xl mx-auto px-5 pb-4">
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      <section className="max-w-5xl mx-auto px-5 pb-4">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -780,10 +736,10 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════ */}
-      {/* PHASE 2 — PROOF OF WORK + DEAN'S LIST STRIP                  */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="proof" className="max-w-6xl mx-auto px-5 pb-4">
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      {/* PHASE 2 â€” PROOF OF WORK + DEAN'S LIST STRIP                  */}
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      <section id="proof" className="max-w-5xl mx-auto px-5 pb-4">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -927,10 +883,10 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       {/* FEATURED PROJECTS                                             */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="projects" className="max-w-6xl mx-auto px-5 pb-4">
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      <section id="projects" className="max-w-5xl mx-auto px-5 pb-4">
         <motion.div
           variants={fadeUp}
           custom={0}
@@ -965,10 +921,10 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       {/* SKILLS                                                        */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section className="max-w-6xl mx-auto px-5 pb-4">
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      <section className="max-w-5xl mx-auto px-5 pb-4">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -1043,10 +999,10 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       {/* CONTACT                                                       */}
-      {/* ══════════════════════════════════════════════════════════════ */}
-      <section id="contact" className="max-w-6xl mx-auto px-5 pb-8">
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      <section id="contact" className="max-w-5xl mx-auto px-5 pb-8">
         <motion.div
           variants={scaleIn}
           initial="hidden"
@@ -1114,14 +1070,14 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ── Footer ──────────────────────────────────────────────────── */}
+      {/* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <p className="text-center text-[11px] pb-20" style={{ color: "var(--text-tertiary)" }}>
-        Designed & built by Utkarsh Pushpankar · 2026
+        Designed & built by Utkarsh Pushpankar Â· 2026
       </p>
 
-      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       {/* FLOATING DOCK                                                 */}
-      {/* ══════════════════════════════════════════════════════════════ */}
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       {mounted && (
         <div className="floating-dock-wrap">
           <motion.div
@@ -1168,5 +1124,7 @@ export default function Home() {
     </div>
   );
 }
+
+
 
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowUpRight, Github } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight, Github, Play } from "lucide-react";
 
 interface Project {
   title: string;
@@ -13,10 +14,17 @@ interface Project {
 }
 
 export default function ProjectCard({ project }: { project: Project }) {
+  const primaryHref = project.demo || project.github;
+  const previewSrc = project.screenshots?.[0];
+  const hasPreview = Boolean(project.demo && previewSrc);
+  const isVideoPreview = Boolean(previewSrc && /\.(mp4|webm|ogg)$/i.test(previewSrc));
+
   return (
     <div
-      className="project-card card card-interactive group flex flex-col h-full cursor-pointer"
-      onClick={() => project.github && window.open(project.github, "_blank")}
+      className={`project-card card card-interactive group flex flex-col h-full ${
+        primaryHref ? "cursor-pointer" : "cursor-default"
+      }`}
+      onClick={() => primaryHref && window.open(primaryHref, "_blank")}
     >
       {/* Top gradient banner */}
       <div
@@ -35,9 +43,36 @@ export default function ProjectCard({ project }: { project: Project }) {
         {/* Hover dark overlay */}
         <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
 
+        {hasPreview && (
+          <div className="project-preview-layer">
+            {isVideoPreview ? (
+              <video
+                src={previewSrc}
+                className="project-preview-media"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            ) : (
+              <Image
+                src={previewSrc!}
+                alt={`${project.title} demo preview`}
+                fill
+                sizes="(max-width: 640px) 100vw, 40vw"
+                className="project-preview-media"
+              />
+            )}
+            <div className="project-preview-meta">
+              <Play size={12} />
+              <span>{project.demo?.includes("linkedin.com") ? "LinkedIn Demo" : "Live Demo"}</span>
+            </div>
+          </div>
+        )}
+
         {/* Project title */}
         <h3
-          className="display-font relative z-10 text-xl sm:text-2xl font-bold tracking-tight text-white px-6 text-center"
+          className="display-font relative z-10 text-xl sm:text-2xl font-bold tracking-tight text-white px-6 text-center transition-opacity duration-200 group-hover:opacity-0"
           style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}
         >
           {project.title}
