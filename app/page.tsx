@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -23,6 +23,7 @@ import {
   Globe,
   Database,
   FileText,
+  GraduationCap,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -83,7 +84,7 @@ const PROJECTS = [
   {
     title: "VocalHire",
     description:
-      "Real-time AI voice interview platform â€” Deepgram STT, ElevenLabs TTS, Gemini scoring across 5 categories with detailed analysis.",
+      "Real-time AI voice interview platform - Deepgram STT, ElevenLabs TTS, Gemini scoring across 5 categories with detailed analysis.",
     tech: ["Next.js", "TypeScript", "Firebase", "Vapi.ai", "Deepgram", "ElevenLabs"],
     github: "https://github.com/utkarshpushpankar",
     demo: "",
@@ -93,7 +94,7 @@ const PROJECTS = [
   {
     title: "Women Safety Analytics",
     description:
-      "Real-time CV system â€” fine-tuned YOLOv8 for person detection + ResNet50 for gender classification at 81% accuracy on live video.",
+      "Real-time CV system - fine-tuned YOLOv8 for person detection + ResNet50 for gender classification at 81% accuracy on live video.",
     tech: ["Python", "PyTorch", "YOLOv8", "ResNet50", "OpenCV"],
     github: "https://github.com/utkarshpushpankar",
     demo: "",
@@ -103,7 +104,7 @@ const PROJECTS = [
   {
     title: "AgriConnect",
     description:
-      "AI crop monitoring â€” 92.5% classification accuracy, pest detection, NDVI indices, and geospatial heatmaps via React Leaflet.",
+      "AI crop monitoring - 92.5% classification accuracy, pest detection, NDVI indices, and geospatial heatmaps via React Leaflet.",
     tech: ["React", "Node.js", "Flask", "TensorFlow", "OpenCV"],
     github: "https://github.com/utkarshpushpankar",
     demo: "",
@@ -124,6 +125,49 @@ const HERO_STATS = [
   { value: "450+", label: "law firms on the platform I currently help scale" },
   { value: "9.41", label: "CGPA while pursuing B.Tech Computer Science" },
   { value: "3x", label: "Dean's List recognition across consecutive years" },
+];
+
+const EXPERIENCE_ITEMS = [
+  {
+    role: "Node.js + TypeScript Engineer",
+    company: "Claw LegalTech",
+    status: "Active",
+    statusTone: "active" as const,
+    timeframe: "Aug 2025 - Present",
+    summary:
+      "Sole frontend developer scaling a production platform used by legal teams every day.",
+    bullets: [
+      "Scaled a production platform serving 450+ law firms and 100+ paid customers.",
+      "Built centralized Redux state management across 15+ core product surfaces.",
+      "Improved UX and performance with debouncing, memoization, and cleaner feature architecture.",
+      "Shipped Liquid Text, a standalone PDF annotation engine, in 3-4 weeks end-to-end.",
+    ],
+    tags: ["Production", "Redux", "Performance", "Liquid Text"],
+    featured: true,
+  },
+  {
+    role: "Backend Developer",
+    company: "Revive",
+    status: "Freelance",
+    statusTone: "neutral" as const,
+    timeframe: "Freelance Engagement",
+    summary:
+      "Worked on the backend stack for a preventive and predictive health subscription platform.",
+    bullets: [
+      "Architected a production-ready backend foundation for the platform.",
+      "Integrated Dodo Payments to support subscription and payment workflows.",
+      "Implemented OTP authentication using Firebase for secure user onboarding.",
+      "Built a LangChain-powered chatbot pipeline for health-focused user interactions.",
+    ],
+    tags: ["Backend", "Payments", "Firebase OTP", "LangChain"],
+    featured: false,
+  },
+];
+
+const EDUCATION_HIGHLIGHTS = [
+  "Dean's List recognition earned three times across consecutive academic years.",
+  "CGPA of 9.41/10 while pursuing B.Tech in Computer Science.",
+  "Balancing academics with live product work, AI systems, and full-stack shipping.",
 ];
 
 const SKILLS_CATEGORIES = [
@@ -256,12 +300,32 @@ export default function Home() {
   const [activeDeanIndex, setActiveDeanIndex] = useState(0);
   const [aestheticIndex, setAestheticIndex] = useState(0);
   const skillBoardRef = useRef<HTMLDivElement>(null);
+  const experienceRef = useRef<HTMLDivElement>(null);
   const mounted = useSyncExternalStore(
     () => () => {},
     () => true,
     () => false
   );
   const isDark = mounted && theme === "dark";
+  const { scrollYProgress: experienceProgress } = useScroll({
+    target: experienceRef,
+    offset: ["start start", "end end"],
+  });
+  const experienceSpring = { stiffness: 136, damping: 24, mass: 0.3 };
+  const firstCardScaleBase = useTransform(experienceProgress, [0, 0.46, 0.76], [1, 1, 0.986]);
+  const firstCardYBase = useTransform(experienceProgress, [0, 0.5, 0.8], [0, 0, -14]);
+  const firstCardOpacityBase = useTransform(experienceProgress, [0, 0.52, 0.82], [1, 1, 0.66]);
+  const secondCardYBase = useTransform(experienceProgress, [0.14, 0.5, 0.72], [132, 92, 0]);
+  const secondCardScaleBase = useTransform(experienceProgress, [0.14, 0.5, 0.72], [0.972, 0.965, 1]);
+  const secondCardOpacityBase = useTransform(experienceProgress, [0.24, 0.48, 0.68], [0, 0.34, 1]);
+  const secondCardRotateBase = useTransform(experienceProgress, [0.14, 0.72], [0.85, 0]);
+  const firstCardScale = useSpring(firstCardScaleBase, experienceSpring);
+  const firstCardY = useSpring(firstCardYBase, experienceSpring);
+  const firstCardOpacity = useSpring(firstCardOpacityBase, experienceSpring);
+  const secondCardY = useSpring(secondCardYBase, experienceSpring);
+  const secondCardScale = useSpring(secondCardScaleBase, experienceSpring);
+  const secondCardOpacity = useSpring(secondCardOpacityBase, experienceSpring);
+  const secondCardRotate = useSpring(secondCardRotateBase, experienceSpring);
 
   useEffect(() => {
     const sectionIds = DOCK_ITEMS.map((item) => item.href.slice(1));
@@ -509,12 +573,12 @@ export default function Home() {
               className="text-sm leading-[1.85]"
               style={{ color: "var(--text-secondary)" }}
             >
-              I&apos;m a full-stack engineer with 1.5+ years shipping real production features â€” not
+              I&apos;m a full-stack engineer with 1.5+ years shipping real production features - not
               side projects, but live systems used daily. I specialize in AI-native architectures,
               real-time systems, and owning features end-to-end. Currently the sole frontend dev
               scaling Claw LegalTech, a platform serving{" "}
               <strong style={{ color: "var(--text-primary)" }}>450+ law firms</strong>. I don&apos;t
-              just write code â€” I own outcomes.
+              just write code - I own outcomes.
             </p>
           </div>
 
@@ -550,13 +614,13 @@ export default function Home() {
       {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
       <section id="experience" className="max-w-5xl mx-auto px-5 pb-4">
         <motion.div
-          variants={scaleIn}
+          variants={stagger}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
-          className="card p-6 sm:p-8"
+          className="card experience-shell-card p-6 sm:p-8"
         >
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between gap-3 mb-6">
             <p
               className="text-[11px] font-semibold uppercase tracking-widest"
               style={{ color: "var(--text-tertiary)" }}
@@ -566,134 +630,127 @@ export default function Home() {
             <Briefcase size={15} style={{ color: "var(--text-tertiary)" }} />
           </div>
 
-          <div className="flex gap-4">
-            <div className="flex flex-col items-center pt-1.5">
-              <div className="timeline-dot active" style={{ background: "var(--accent-green)" }} />
-              <div className="w-px flex-1 my-2" style={{ background: "var(--border-strong)" }} />
-              <div className="timeline-dot" style={{ background: "var(--border-strong)" }} />
-              <div className="w-px flex-1 my-2" style={{ background: "var(--border-strong)" }} />
-              <div className="timeline-dot" style={{ background: "var(--border-strong)" }} />
+          <div className="experience-section-head">
+            <h2 className="display-font experience-section-title">Work Experience</h2>
+            <p className="experience-section-copy">
+              A scroll-led stack of production ownership, freelance backend delivery, and the bulletins
+              that actually mattered.
+            </p>
+          </div>
+
+          <div ref={experienceRef} className="experience-scroll-shell">
+            <div className="experience-scroll-stage">
+              {EXPERIENCE_ITEMS.map((item, index) => (
+                <motion.article
+                  key={item.company}
+                  className={`experience-deck-card ${index === 0 ? "primary" : "secondary"}`}
+                  style={
+                    index === 0
+                      ? { zIndex: 1, scale: firstCardScale, y: firstCardY, opacity: firstCardOpacity }
+                      : {
+                          zIndex: 2,
+                          y: secondCardY,
+                          scale: secondCardScale,
+                          opacity: secondCardOpacity,
+                          rotate: secondCardRotate,
+                        }
+                  }
+                >
+                  <div className="experience-card-glow" />
+                  <div className="experience-card-orbit experience-card-orbit-one" />
+                  <div className="experience-card-orbit experience-card-orbit-two" />
+
+                  <div className="experience-card-topline">
+                    <div className="experience-card-kicker">
+                      <span className="experience-card-index">{`0${index + 1}`}</span>
+                      <span className="experience-card-track">
+                        {index === 0 ? "Current build lane" : "Freelance build lane"}
+                      </span>
+                    </div>
+                    <p className="experience-card-date">{item.timeframe}</p>
+                  </div>
+
+                  <div className="experience-card-body">
+                    <div className="experience-card-lead">
+                      <p className="experience-entry-label">{index === 0 ? "Now Shipping" : "Independent Work"}</p>
+                      <h3 className="experience-entry-role">{item.role}</h3>
+                      <div className="experience-entry-company-row editorial">
+                        <span className="experience-entry-company accent">{item.company}</span>
+                        <span className="experience-inline-separator">•</span>
+                        <span className="experience-inline-meta">{item.status}</span>
+                      </div>
+                      <p className="experience-entry-summary">{item.summary}</p>
+                    </div>
+
+                    <div className="experience-card-bulletins">
+                      <p className="experience-bullet-heading">Bulletins</p>
+                      <ul className="experience-bullet-list">
+                        {item.bullets.map((bullet) => (
+                          <li key={bullet} className="experience-bullet-item">
+                            <span className="experience-bullet-marker" />
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      <section id="education" className="max-w-5xl mx-auto px-5 pb-4">
+        <motion.div
+          variants={scaleIn}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+          className="card p-6 sm:p-8"
+        >
+          <div className="flex items-center justify-between gap-3 mb-6">
+            <p
+              className="text-[11px] font-semibold uppercase tracking-widest"
+              style={{ color: "var(--text-tertiary)" }}
+            >
+              Education
+            </p>
+            <GraduationCap size={16} style={{ color: "var(--text-tertiary)" }} />
+          </div>
+
+          <div className="education-board">
+            <div className="education-main-card">
+              <p className="education-main-label">Academic Profile</p>
+              <h2 className="display-font education-main-title">B.Tech Computer Science</h2>
+              <p className="education-main-school">Bennett University</p>
+
+              <div className="education-chip-row">
+                <span className="education-chip">2023 - 2027</span>
+                <span className="education-chip strong">CGPA 9.41/10</span>
+                <span className="education-chip">Class of 2027</span>
+              </div>
             </div>
 
-            <div className="flex flex-col gap-8 flex-1 min-w-0">
-              {/* Claw LegalTech */}
-              <div>
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-3">
-                  <div>
-                    <h3 className="text-base font-semibold" style={{ color: "var(--text-primary)" }}>
-                      Next.js + TypeScript Engineer
-                    </h3>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                        Claw LegalTech
-                      </span>
-                      <span
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold"
-                        style={{ background: "var(--active-badge)", color: "var(--active-text)" }}
-                      >
-                        Active
-                      </span>
-                    </div>
-                  </div>
-                  <span
-                    className="text-xs flex-shrink-0 mt-1 sm:mt-0"
-                    style={{ color: "var(--text-tertiary)" }}
-                  >
-                    Aug 2025 â€“ Present
-                  </span>
+            <div className="education-side-card">
+              <p className="education-main-label">Highlights</p>
+              <ul className="education-bullet-list">
+                {EDUCATION_HIGHLIGHTS.map((item) => (
+                  <li key={item} className="education-bullet-item">
+                    <span className="education-bullet-index" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="education-stat-row">
+                <div className="education-stat-card">
+                  <span className="education-stat-value">3x</span>
+                  <span className="education-stat-label">Dean&apos;s List</span>
                 </div>
-
-                <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-secondary)" }}>
-                  Sole frontend developer scaling a production platform serving{" "}
-                  <strong style={{ color: "var(--text-primary)" }}>450+ law firms</strong> and{" "}
-                  <strong style={{ color: "var(--text-primary)" }}>100+ paid customers</strong>. Built
-                  centralized Redux state management, scaled architecture across 15+ core features, and
-                  optimized performance with debouncing, memoization, and code splitting.
-                </p>
-
-                <div className="highlight-box">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-sm">ðŸš€</span>
-                    <h4 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
-                      Flagship: Liquid Text
-                    </h4>
-                    <span
-                      className="px-2 py-0.5 rounded-full text-[10px] font-medium"
-                      style={{
-                        background: "var(--brand-grad-soft)",
-                        color: "var(--accent-blue)",
-                        border: "1px solid color-mix(in srgb, var(--accent-blue) 34%, transparent)",
-                      }}
-                    >
-                      Full-Stack
-                    </span>
-                  </div>
-                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                    Architected and shipped a standalone PDF annotation engine in 3â€“4 weeks â€” dual-canvas
-                    sync, infinite canvas drawing, threaded annotations, stylus/touch support,
-                    bounding-box mapping, and persistent storage via Node.js + MongoDB.
-                  </p>
-                </div>
-              </div>
-
-              {/* Revive */}
-              <div>
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-3">
-                  <div>
-                    <h3 className="text-base font-semibold" style={{ color: "var(--text-primary)" }}>
-                      Backend Developer
-                    </h3>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                        Revive
-                      </span>
-                      <span
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold"
-                        style={{
-                          background: "var(--accent-muted)",
-                          color: "var(--text-secondary)",
-                          border: "1px solid var(--border)",
-                        }}
-                      >
-                        Freelance
-                      </span>
-                    </div>
-                  </div>
-                  <span
-                    className="text-xs flex-shrink-0 mt-1 sm:mt-0"
-                    style={{ color: "var(--text-tertiary)" }}
-                  >
-                    Previously
-                  </span>
-                </div>
-
-                <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-secondary)" }}>
-                  Backend developer at Revive, a preventive and predictive health subscription platform.
-                  Architected a production-ready backend, integrated{" "}
-                  <strong style={{ color: "var(--text-primary)" }}>Dodo Payments</strong> for payment
-                  workflows, implemented{" "}
-                  <strong style={{ color: "var(--text-primary)" }}>Firebase OTP authentication</strong>,
-                  and built a <strong style={{ color: "var(--text-primary)" }}>LangChain chatbot pipeline</strong>.
-                </p>
-              </div>
-
-              {/* Education */}
-              <div>
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
-                  <div>
-                    <h3 className="text-base font-semibold" style={{ color: "var(--text-primary)" }}>
-                      B.Tech Computer Science
-                    </h3>
-                    <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                      Bennett University Â· CGPA 9.41/10
-                    </span>
-                  </div>
-                  <span
-                    className="text-xs flex-shrink-0 mt-1 sm:mt-0"
-                    style={{ color: "var(--text-tertiary)" }}
-                  >
-                    2023 â€“ 2027
-                  </span>
+                <div className="education-stat-card">
+                  <span className="education-stat-value">9.41</span>
+                  <span className="education-stat-label">Current CGPA</span>
                 </div>
               </div>
             </div>
@@ -1072,7 +1129,7 @@ export default function Home() {
 
       {/* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <p className="text-center text-[11px] pb-20" style={{ color: "var(--text-tertiary)" }}>
-        Designed & built by Utkarsh Pushpankar Â· 2026
+        Designed & built by Utkarsh Pushpankar - 2026
       </p>
 
       {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}

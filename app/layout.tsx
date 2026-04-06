@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
-import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import CustomCursor from "./components/CustomCursor";
+import "./globals.css";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Utkarsh Pushpankar — Full-Stack Engineer",
+  title: "Utkarsh Pushpankar - Full-Stack Engineer",
   description:
     "Full-stack engineer specializing in AI-native products, real-time systems, and scalable backend architectures. Building production-grade software that matters.",
   keywords: [
@@ -34,9 +34,14 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Utkarsh Pushpankar" }],
   openGraph: {
-    title: "Utkarsh Pushpankar — Full-Stack Engineer",
+    title: "Utkarsh Pushpankar - Full-Stack Engineer",
     description: "Full-stack engineer building AI-native systems and production-grade software.",
     type: "website",
+  },
+  icons: {
+    icon: [{ url: "/Professional_Photo.jpeg", type: "image/jpeg" }],
+    shortcut: "/Professional_Photo.jpeg",
+    apple: "/Professional_Photo.jpeg",
   },
 };
 
