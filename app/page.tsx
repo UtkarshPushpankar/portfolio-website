@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
@@ -78,8 +78,10 @@ const PROJECTS = [
     tech: ["React", "Node.js", "FastAPI", "PostgreSQL", "Gemini", "XGBoost", "Prophet"],
     github: "https://github.com/utkarshpushpankar",
     demo: "",
-    screenshots: [],
+    image: "/Project_Demo_1.png",
     color: "linear-gradient(135deg, #0284c7 0%, #0f766e 100%)",
+    accent: "#0ea5e9",
+    label: "AI · Project Management",
   },
   {
     title: "VocalHire",
@@ -88,18 +90,10 @@ const PROJECTS = [
     tech: ["Next.js", "TypeScript", "Firebase", "Vapi.ai", "Deepgram", "ElevenLabs"],
     github: "https://github.com/utkarshpushpankar",
     demo: "",
-    screenshots: [],
+    image: "/Project_Demo_2.png",
     color: "linear-gradient(135deg, #f97316 0%, #ef4444 100%)",
-  },
-  {
-    title: "Women Safety Analytics",
-    description:
-      "Real-time CV system - fine-tuned YOLOv8 for person detection + ResNet50 for gender classification at 81% accuracy on live video.",
-    tech: ["Python", "PyTorch", "YOLOv8", "ResNet50", "OpenCV"],
-    github: "https://github.com/utkarshpushpankar",
-    demo: "",
-    screenshots: [],
-    color: "linear-gradient(135deg, #0891b2 0%, #22c55e 100%)",
+    accent: "#f97316",
+    label: "AI · Voice · Real-time",
   },
   {
     title: "AgriConnect",
@@ -108,8 +102,34 @@ const PROJECTS = [
     tech: ["React", "Node.js", "Flask", "TensorFlow", "OpenCV"],
     github: "https://github.com/utkarshpushpankar",
     demo: "",
-    screenshots: [],
+    image: "/Project_Demo_3.png",
     color: "linear-gradient(135deg, #16a34a 0%, #06b6d4 100%)",
+    accent: "#10b981",
+    label: "AI · Agriculture · ML",
+  },
+  {
+    title: "Women Safety Analytics",
+    description:
+      "Real-time CV system with fine-tuned YOLOv8 for person detection and ResNet50 for gender classification at 81% accuracy. Includes crowd density heatmaps, threat-level scoring, and live alert timelines.",
+    tech: ["Python", "PyTorch", "YOLOv8", "ResNet50", "OpenCV"],
+    github: "https://github.com/utkarshpushpankar",
+    demo: "",
+    image: "/Project_Demo_4.png",
+    color: "linear-gradient(135deg, #0891b2 0%, #7c3aed 100%)",
+    accent: "#06b6d4",
+    label: "AI · CV · Safety",
+  },
+  {
+    title: "re:vive.",
+    description:
+      "Preventive and predictive health subscription platform. Architected production-ready backend with Dodo Payments, Firebase OTP auth, and a LangChain-powered health chatbot pipeline.",
+    tech: ["Node.js", "Firebase", "LangChain", "Dodo Payments", "TypeScript"],
+    github: "https://github.com/utkarshpushpankar",
+    demo: "",
+    image: "/Project_Demo_5.png",
+    color: "linear-gradient(135deg, #3b2d6e 0%, #1a4a6e 100%)",
+    accent: "#2dd4bf",
+    label: "Freelance · Health · Backend",
   },
 ];
 
@@ -884,7 +904,7 @@ export default function Home() {
 
             <div className="deans-timeline-wrap">
               <div className="deans-timeline">
-                {DEANS_LIST_AWARDS.map((award, idx) => {
+                 {DEANS_LIST_AWARDS.map((award, idx) => {
                   const isMainSelectable = award.showInMain !== false;
                   const mappedMainIndex = deansMainAwards.findIndex((item) => item.src === award.src);
                   const isActive =
@@ -950,32 +970,107 @@ export default function Home() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
-          className="flex items-center justify-between mb-4 px-1"
+          className="mb-12 px-1"
         >
           <p
-            className="text-[11px] font-semibold uppercase tracking-widest"
+            className="text-[11px] font-semibold uppercase tracking-widest mb-3"
             style={{ color: "var(--text-tertiary)" }}
           >
             Featured Projects
           </p>
-          <p className="text-[11px]" style={{ color: "var(--text-tertiary)" }}>
-            From scalable webapps to AI systems
+          <h2
+            className="display-font font-bold mb-3"
+            style={{ fontSize: "clamp(2.2rem, 5vw, 3.4rem)", lineHeight: 1.05, color: "var(--text-primary)" }}
+          >
+            Things I&apos;ve Built
+          </h2>
+          <p
+            className="text-base"
+            style={{ color: "var(--text-secondary)", maxWidth: "44ch" }}
+          >
+            From scalable webapps to AI systems &mdash; production code, real users.
           </p>
         </motion.div>
 
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-        >
-          {PROJECTS.map((project, i) => (
-            <motion.div key={project.title} variants={fadeUp} custom={i * 0.05}>
-              <ProjectCard project={project} />
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="proj-list">
+          {PROJECTS.map((project, i) => {
+            const isReversed = i % 2 !== 0;
+            return (
+              <motion.article
+                key={project.title}
+                variants={fadeUp}
+                custom={i * 0.06}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-60px" }}
+                className={`proj-row ${isReversed ? "proj-row--reversed" : ""}`}
+              >
+                {/* Demo image */}
+                <div className="proj-media-wrap">
+                  <div className="proj-media-frame">
+                    <div className="proj-media-img-wrap">
+                      <Image
+                        src={project.image}
+                        alt={`${project.title} demo screenshot`}
+                        width={1920}
+                        height={923}
+                        className="proj-media-img"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div className="proj-details">
+                  <p
+                    className="proj-details-label"
+                    style={{ color: project.accent }}
+                  >
+                    {project.label}
+                  </p>
+
+                  <h3 className="proj-details-title display-font">
+                    {project.title}
+                  </h3>
+
+                  <p className="proj-details-desc">
+                    {project.description}
+                  </p>
+
+                  <div className="proj-tech-row">
+                    {project.tech.map((t) => (
+                      <span key={t} className="proj-tech-chip">{t}</span>
+                    ))}
+                  </div>
+
+                  <div className="proj-actions">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="proj-action-btn proj-action-btn--ghost"
+                      >
+                        <Github size={14} />
+                        GitHub
+                      </a>
+                    )}
+                    <a
+                      href={project.demo || project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="proj-action-btn proj-action-btn--primary"
+                      style={{ background: project.accent }}
+                    >
+                      <ExternalLink size={14} />
+                      Visit
+                    </a>
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
       </section>
 
       {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
